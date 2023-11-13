@@ -158,8 +158,13 @@ function repeatString(str, times) {
  *   removeFirstOccurrences('I like legends', 'end') => 'I like legs'.
  *   removeFirstOccurrences('ABABAB', 'BA') => 'ABAB'.
  */
-function removeFirstOccurrences(/* str, value */) {
-  throw new Error('Not implemented');
+
+function removeFirstOccurrences(str, value) {
+  const index = str.indexOf(value);
+  if (index !== -1) {
+    return str.substring(0, index) + str.substring(index + value.length);
+  }
+  return str;
 }
 
 /**
@@ -174,8 +179,12 @@ function removeFirstOccurrences(/* str, value */) {
  *   removeLastOccurrences('I like legends', 'end') => 'I like legs'.
  *   removeLastOccurrences('ABABAB', 'BA') => 'ABAB'.
  */
-function removeLastOccurrences(/* str, value */) {
-  throw new Error('Not implemented');
+function removeLastOccurrences(str, value) {
+  const index = str.lastIndexOf(value);
+  if (index !== -1) {
+    return str.substring(0, index) + str.substring(index + value.length);
+  }
+  return str;
 }
 
 /**
@@ -333,6 +342,7 @@ function countVowels(str) {
  */
 
 function isPalindrome(str) {
+  // removes non - alphanumeric characters from the input string
   const strLeter = str.replace(/[^A-Za-z0-9_]/g, '');
   const lowerStr = strLeter.toLowerCase().split('').reverse().join('');
   return strLeter.toLowerCase() === lowerStr;
@@ -350,13 +360,19 @@ function isPalindrome(str) {
  *   findLongestWord('A long and winding road') => 'winding'
  *   findLongestWord('No words here') => 'words'
  */
-function findLongestWord(/* sentence */) {
-  throw new Error('Not implemented');
-}
-// function findLongestWord(sentence) {
-//   const wordLength = sentence.split(' ');
-//   return wordLength;
+// function findLongestWord(/* sentence */) {
+//   throw new Error('Not implemented');
 // }
+function findLongestWord(sentence) {
+  const words = sentence.split(' ');
+  if (words.length === 0) {
+    return '';
+  }
+  const longestWord = words.reduce((acc, curr) => {
+    return curr.length > acc.length ? curr : acc;
+  }, words[0]);
+  return longestWord;
+}
 
 /**
  * Returns the string where each word is reversed.
@@ -368,8 +384,13 @@ function findLongestWord(/* sentence */) {
  *   reverseWords('Hello World') => 'olleH dlroW'
  *   reverseWords('The Quick Brown Fox') => 'ehT kciuQ nworB xoF'
  */
-function reverseWords(/* str */) {
-  throw new Error('Not implemented');
+
+function reverseWords(str) {
+  const words = str.split(' ');
+  const reverceWord = words.map((word) => {
+    return word.split('').reverse().join('');
+  });
+  return reverceWord.join(' ');
 }
 
 /**
@@ -383,8 +404,24 @@ function reverseWords(/* str */) {
  *   invertCase('JavaScript is Fun') => 'jAVAsCRIPT IS fUN'
  *   invertCase('12345') => '12345'
  */
-function invertCase(/* str */) {
-  throw new Error('Not implemented');
+// function invertCase(/* str */) {
+//   throw new Error('Not implemented');
+// }
+
+function invertCase(str) {
+  let invertedStr = '';
+
+  for (let i = 0; i < str.length; i += 1) {
+    const currentletter = str[i];
+
+    if (currentletter === currentletter.toUpperCase()) {
+      invertedStr += currentletter.toLowerCase();
+    } else {
+      invertedStr += currentletter.toUpperCase();
+    }
+  }
+
+  return invertedStr;
 }
 
 /**
@@ -414,8 +451,9 @@ function getStringFromTemplate(firstName, lastName) {
  *   extractNameFromTemplate('Hello, John Doe!') => 'John Doe'
  *   extractNameFromTemplate('Hello, Chuck Norris!') => 'Chuck Norris'
  */
-function extractNameFromTemplate(/* value */) {
-  throw new Error('Not implemented');
+
+function extractNameFromTemplate(value) {
+  return value.slice(7, value.length - 1);
 }
 
 /**
@@ -472,8 +510,11 @@ function extractEmails(str) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+
+function encodeToRot13(str) {
+  const input = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  const output = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
+  return str.replace(/[a-z]/gi, (letter) => output[input.indexOf(letter)]);
 }
 
 /**
@@ -500,8 +541,63 @@ function encodeToRot13(/* str */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+
+function getCardId(value) {
+  const arr = [
+    'A♣',
+    '2♣',
+    '3♣',
+    '4♣',
+    '5♣',
+    '6♣',
+    '7♣',
+    '8♣',
+    '9♣',
+    '10♣',
+    'J♣',
+    'Q♣',
+    'K♣',
+    'A♦',
+    '2♦',
+    '3♦',
+    '4♦',
+    '5♦',
+    '6♦',
+    '7♦',
+    '8♦',
+    '9♦',
+    '10♦',
+    'J♦',
+    'Q♦',
+    'K♦',
+    'A♥',
+    '2♥',
+    '3♥',
+    '4♥',
+    '5♥',
+    '6♥',
+    '7♥',
+    '8♥',
+    '9♥',
+    '10♥',
+    'J♥',
+    'Q♥',
+    'K♥',
+    'A♠',
+    '2♠',
+    '3♠',
+    '4♠',
+    '5♠',
+    '6♠',
+    '7♠',
+    '8♠',
+    '9♠',
+    '10♠',
+    'J♠',
+    'Q♠',
+    'K♠',
+  ];
+  return arr.indexOf(value);
 }
 
 module.exports = {
